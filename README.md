@@ -1,0 +1,2 @@
+# scifopyFinal
+hw for course
