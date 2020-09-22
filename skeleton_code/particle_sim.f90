@@ -39,14 +39,12 @@ contains
         ! Implement check for collision with boundary
         do i=1,psys%n_particles
            if (1-psys%pos(i,1) .le. psys%r(i) .or.  psys%pos(i,1) .le. psys%r(i) )  then 
-              ! print *,"particle ", i, " bounces in the horizontal  boundary"
               psys % vel(i,2) = -1.* psys % vel(i,2)
-           else if (1-psys%pos(i,2) .le. psys%r(i) .or. psys%pos(i,2) .le. psys%r(i)) then 
-              print *,"particle ", i, " bounces in the vertical  boundary"
-              ! psys % vel(i,1) = -1.* psys % vel(i,1)
-           else
-              print *, i ," :: ", psys%pos(i,1), "," , psys%pos(i,2), " with r= " ,  psys%r(i)
-              !     (1-psys%pos(i,1) < psys%r(i)) the
+              !print *,"collision with wall x"
+           end if
+           if (1-psys%pos(i,2) .le. psys%r(i) .or. psys%pos(i,2) .le. psys%r(i)) then 
+              psys % vel(i,1) = -1.* psys % vel(i,1)
+              !print *,"collision with wall y"
            end if
         end do
 
@@ -57,15 +55,49 @@ contains
         ! Check for particle collisions and update if neccesary
         type(particle_system), intent(inout) :: psys
         integer(ik):: i,j
-        real(ik) :: diffx, diffy , colldist
+        real(ik) :: colldist 
+        real(8) :: myfactor
+        type(vector) :: pos1,pos2, vel1,vel2, diffpos,diffvel
+
         ! check all possible combinations betwen particles
         do i=1,psys%n_particles
            do j=i+1,psys%n_particles
-              diffx = (psys%pos(i,1)- psys%pos(j,1) )
-              diffy = (psys%pos(i,2)- psys%pos(j,2) )
+
+              !create vector types for the position of particles i,j
+              pos1%c(1)= psys%pos(i,1)
+              pos1%c(2)= psys%pos(i,2)
+              pos2%c(1)= psys%pos(j,1)
+              pos2%c(2)= psys%pos(j,2)
+              
+              !create vector types for the velocity of particle i,j             
+              vel2%c(1)= psys%vel(j,1)
+              vel2%c(2)= psys%vel(j,2)
+              vel1%c(1)= psys%vel(i,1)
+              vel1%c(2)= psys%vel(i,2)
+
+              ! collision distance 
               colldist = psys%r(i) +psys%r(j)
-              if ( sqrt( diffx*diffx + diffy*diffy) .le. colldist ) then
-                 write(*,'(A5,2F12.5,A5,2F12.5,A5)')'particles', i, 'and ', j,'collide'
+
+              !if particles collide update their velocities
+              if ( sqrt(vector_dot_vector(pos2-pos1,pos2-pos1)) .le. colldist ) then
+                 diffpos = pos2-pos1
+                 diffvel = vel2-vel1
+                 myfactor = vector_dot_vector(diffvel,diffpos)/vector_dot_vector(diffpos,diffpos)
+                 vel1 = vel1 +   diffpos * myfactor
+
+                 ! now change the formula to update the velocity of particle j 
+                 diffvel = vel1-vel2
+                 myfactor = vector_dot_vector(diffvel,diffpos)/vector_dot_vector(diffpos,diffpos)
+                 vel2 = vel2 +   diffpos * myfactor
+
+                 !we need to update the particle system as well
+                 psys%vel(i,1)=vel1%c(1) 
+                 psys%vel(i,2)=vel1%c(2) 
+                 psys%vel(j,1)=vel2%c(1) 
+                 psys%vel(j,2)=vel2%c(2)
+
+                 print *,"collision with of particles ",i,j
+                 
               end if
            end do
         end do
