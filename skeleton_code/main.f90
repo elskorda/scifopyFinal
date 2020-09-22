@@ -30,10 +30,10 @@ program particles
     ! Perform particle simulation 
     do l=1 , times_to_repeat
        call print_particle_system(psys)
+       
        call check_boundary(psys)
-       call update_particle_system(psys,psys%dt) 
+       call update_particle_system(psys)
        call check_collision(psys)
-       call update_particle_system(psys,psys%dt) 
        !call print_particle_system(psys)   
        call write_particle_positions(psys)
     end do
