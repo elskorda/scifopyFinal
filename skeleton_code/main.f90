@@ -7,10 +7,10 @@ program particles
     implicit none
 
     type(particle_system) :: psys
-    integer(rk) :: i, times_to_repeat
+    integer(rk) :: l, times_to_repeat
 
 
-     times_to_repeat = 100 
+    times_to_repeat = 100 
 
     call check_collision(psys)
    
@@ -22,17 +22,18 @@ program particles
     call init_particle_system(psys)
 
     ! print particle system after initialization
-    !call print_particle_system(psys)
+    
 
     
-    ! call write_particle_sizes(psys)
+    call write_particle_sizes(psys)
      
     ! Perform particle simulation 
-    do i=1 , times_to_repeat
-
+    do l=1 , times_to_repeat
+       call print_particle_system(psys)
        call check_boundary(psys)
+       call update_particle_system(psys,psys%dt) 
        call check_collision(psys)
-       call update_particle_system(psys,radiusMin/(3 * vinit)) 
+       call update_particle_system(psys,psys%dt) 
        !call print_particle_system(psys)   
        call write_particle_positions(psys)
     end do
