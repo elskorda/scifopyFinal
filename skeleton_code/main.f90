@@ -10,7 +10,7 @@ program particles
     integer(rk) :: l, times_to_repeat
 
 
-    times_to_repeat = 100 
+    times_to_repeat = 1000 
 
     call check_collision(psys)
    
@@ -29,7 +29,7 @@ program particles
      
     ! Perform particle simulation 
     do l=1 , times_to_repeat
-       call print_particle_system(psys)
+       ! call print_particle_system(psys)
        
        call check_boundary(psys)
        call update_particle_system(psys)
