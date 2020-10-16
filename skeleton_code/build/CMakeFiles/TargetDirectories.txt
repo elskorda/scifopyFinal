@@ -1,4 +1,0 @@
-/home/eleskorda/Documents/courses/FortranPython/masterPull/scifopyFinal/skeleton_code/build/CMakeFiles/edit_cache.dir
-/home/eleskorda/Documents/courses/FortranPython/masterPull/scifopyFinal/skeleton_code/build/CMakeFiles/rebuild_cache.dir
-/home/eleskorda/Documents/courses/FortranPython/masterPull/scifopyFinal/skeleton_code/build/CMakeFiles/partlib.dir
-/home/eleskorda/Documents/courses/FortranPython/masterPull/scifopyFinal/skeleton_code/build/CMakeFiles/particles.dir

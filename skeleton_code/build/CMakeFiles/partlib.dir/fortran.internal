@@ -1,8 +1,0 @@
-# The fortran modules provided by this target.
-provides
- particle_data
- particle_defs
- particle_sim
- particle_state
- particle_utils
- vector_operations
