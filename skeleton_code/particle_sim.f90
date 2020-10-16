@@ -39,17 +39,17 @@ contains
         ! Implement check for collision with boundary
         do i=1,psys%n_particles
            if ( psys%pos(i,1) .gt. 1.0 - psys % r(i) .or. psys%pos(i,1) .lt. psys % r(i) .or. psys%pos(i,1) .lt. 0.0)  then 
-              print *,"collision with wall y"
-              print *,psys % vel(i,1), "before"
+              ! print *,"collision with wall y"
+              ! print *,psys % vel(i,1), "before"
               psys % vel(i,1) = - psys % vel(i,1)
-              print *,psys % vel(i,1), "after"
+              ! print *,psys % vel(i,1), "after"
               call update_particle_system(psys) 
            end if
            if (psys%pos(i,2) .gt. 1.0 -psys % r(i) .or. psys%pos(i,2) .lt. psys %r(i) .or. psys%pos(i,2) .lt. 0.0 ) then 
-              print *,"collision with wall x"
-              print *,psys % vel(i,2), "before"
+              ! print *,"collision with wall x"
+              ! print *,psys % vel(i,2), "before"
               psys % vel(i,2) = - psys % vel(i,2)
-              print *,psys % vel(i,2), "after"
+              ! print *,psys % vel(i,2), "after"
               call update_particle_system(psys) 
            end if
         end do
@@ -102,7 +102,7 @@ contains
                  psys%vel(j,1)=vel2%c(1) 
                  psys%vel(j,2)=vel2%c(2)
                  call update_particle_system(psys) 
-                 print *,"collision with of particles ",i,j
+                 ! print *,"collision with of particles ",i,j
                  
               end if
            end do

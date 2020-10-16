@@ -22,6 +22,7 @@ contains
 
       integer(ik), intent(in) :: n
       type(particle_system) :: psys
+      psys%n_particles = n
       allocate(psys%pos(n,2))
       allocate(psys%vel(n,2))
       allocate(psys%r(n))
@@ -39,7 +40,7 @@ contains
       type(particle_system), intent(inout) :: psys
       integer(ik) :: i
       real(ik):: myrand, x, y 
-      psys%n_particles= max_particles 
+      ! psys%n_particles= max_particles 
       psys%v0 = vinit
       psys%rmin = radiusMin
       psys%rmax = radiusMax
@@ -48,7 +49,7 @@ contains
       write(*,'(F12.5)'),radiusMax
       
       call init_random_seed()
-      do i = 1, max_particles
+      do i = 1, psys%n_particles
          
          ! fill the size (r) of each ball/particle
          call random_number(myrand)

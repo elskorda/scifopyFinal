@@ -40,7 +40,8 @@ subroutine collision_check()
 end subroutine collision_check
 
 subroutine boundary_check()
-	call check_boundary(psys)
+  print *, 'call boundary check '
+  call check_boundary(psys)
 end subroutine boundary_check
 
 subroutine update()

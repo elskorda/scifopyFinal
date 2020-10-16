@@ -2,4 +2,4 @@
 
 export PATH=./bin:$PATH
 export PYTHONPATH=./bin:$PYTHONPATH
-python particle_player.py
+python3 particle_player.py
